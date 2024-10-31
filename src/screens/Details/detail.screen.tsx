@@ -1,11 +1,9 @@
 import {
+  ActivityIndicator,
   FlatList,
   Image,
   ImageBackground,
   SafeAreaView,
-  StyleSheet,
-  Text,
-  TouchableHighlight,
   TouchableOpacity,
   View,
 } from 'react-native';
@@ -18,9 +16,10 @@ import styles from './styles';
 import CustomHeader from '../../common/components/customHeader/customHeader.component';
 import {Images} from '../../common/constants/Imges';
 import {goBack} from '../../common/utils/navigatorUtils';
-import {Box, ScaledText} from 'urip-rn-kit';
+import {ScaledText} from 'urip-rn-kit';
 import {Verse} from 'quran-kemenag/dist/intefaces';
 import Colors from '../../common/constants/Color.constants';
+
 type DetailScreenProps = NativeStackScreenProps<
   RootStackParamList,
   typeof NavScreenTags.DETAIL_SCREEN
@@ -28,7 +27,8 @@ type DetailScreenProps = NativeStackScreenProps<
 
 const Detail: React.FC<DetailScreenProps> = ({route}) => {
   const {surahNumber} = route.params;
-  const {surah, verses} = useDetailsViewController(surahNumber);
+  const {surah, verses, togglePlayPause, playingIndex, isLoadingAudio} =
+    useDetailsViewController(surahNumber);
   const stylesObj = styles();
 
   const renderCard = (): React.JSX.Element => {
@@ -57,11 +57,21 @@ const Detail: React.FC<DetailScreenProps> = ({route}) => {
             </ScaledText>
           </View>
           <View style={stylesObj.verseActions}>
-            <TouchableOpacity style={stylesObj.verseActionImgCont}>
-              <Image
-                source={Images.Icons.PLAY}
-                style={stylesObj.verseActionImg}
-              />
+            <TouchableOpacity
+              style={stylesObj.verseActionImgCont}
+              onPress={() => togglePlayPause(index)}>
+              {isLoadingAudio && playingIndex === index ? (
+                <ActivityIndicator size="large" color={Colors.purple1} />
+              ) : (
+                <Image
+                  source={
+                    playingIndex === index
+                      ? Images.Icons.PAUSE
+                      : Images.Icons.PLAY
+                  }
+                  style={stylesObj.verseActionImg}
+                />
+              )}
             </TouchableOpacity>
             <TouchableOpacity style={stylesObj.verseActionImgCont}>
               <Image

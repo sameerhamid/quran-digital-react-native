@@ -67,8 +67,8 @@ const styles = (): DetailsStylesTypes =>
       columnGap: 20,
     },
     verseActionImgCont: {
-      width: 30,
-      height: 30,
+      width: 32,
+      height: 32,
       justifyContent: 'center',
       alignItems: 'center',
       borderRadius: 15,

@@ -6,5 +6,6 @@ export const Images = {
     BACK: require('../assets/icons/back.png'),
     BOOKMARK: require('../assets/icons/bookmark.png'),
     SHARE: require('../assets/icons/share.png'),
+    PAUSE: require('../assets/icons/pause.png'),
   },
 };
