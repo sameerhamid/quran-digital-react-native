@@ -12,7 +12,9 @@ const Home = () => {
 
   const renderSurahItem = (surah: Surah) => {
     return (
-      <TouchableOpacity style={stylesObj.row} onPress={onSurahItemPress}>
+      <TouchableOpacity
+        style={stylesObj.row}
+        onPress={() => onSurahItemPress(surah.surah_id)}>
         <View style={stylesObj.left}>
           <Box
             backgroundImage={Images.NUM_BACKGROUND}

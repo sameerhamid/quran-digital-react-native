@@ -6,7 +6,7 @@ import {NavScreenTags} from '../../common/constants/navScreenTags';
 
 interface HomeScreenViewTypes {
   listOfSurah: Surah[] | undefined;
-  onSurahItemPress: () => void;
+  onSurahItemPress: (surahId: number) => void;
 }
 const useHomeScreenViewController = (): HomeScreenViewTypes => {
   // ----------- states----------
@@ -14,8 +14,8 @@ const useHomeScreenViewController = (): HomeScreenViewTypes => {
 
   // ------------ handlers----------
 
-  const onSurahItemPress = (): void => {
-    navigate(NavScreenTags.DETAIL_SCREEN);
+  const onSurahItemPress = (surahId: number): void => {
+    navigate(NavScreenTags.DETAIL_SCREEN, {surahNumber: surahId});
   };
 
   // ---------side effects---------

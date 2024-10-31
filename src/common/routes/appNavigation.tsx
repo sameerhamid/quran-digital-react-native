@@ -7,7 +7,12 @@ import Home from '../../screens/Home/home.screen';
 import Detail from '../../screens/Details/detail.screen';
 import {NavScreenTags} from '../constants/navScreenTags';
 
-const Stack = createNativeStackNavigator();
+export type RootStackParamList = {
+  [NavScreenTags.HOME_SCREEN]: undefined;
+  [NavScreenTags.DETAIL_SCREEN]: {surahNumber: number}; // Detail screen expects id and name
+};
+
+const Stack = createNativeStackNavigator<RootStackParamList>();
 const AppNavigation = () => {
   const RootStack = () => {
     return (
