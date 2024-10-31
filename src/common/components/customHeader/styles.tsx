@@ -25,14 +25,15 @@ const styles = (
 ): Styles =>
   StyleSheet.create<Styles>({
     container: {
-      shadowColor: Colors.grey2,
+      backgroundColor: 'white', // Ensure there's a background color
+      shadowColor: Colors.grey2, // iOS shadow color
       shadowOffset: {
         width: 0,
         height: 1,
       },
-      shadowOpacity: 0.2,
+      shadowOpacity: 0.23,
+      shadowRadius: 2.62,
       elevation: 1,
-      backgroundColor: 'transparent',
       flexDirection: 'row',
       paddingHorizontal: 16,
       paddingVertical: 14,

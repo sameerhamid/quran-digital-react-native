@@ -5,6 +5,7 @@ import {Surah} from 'quran-kemenag/dist/intefaces';
 import styles from './styles';
 import Colors from '../../common/constants/Color.constants';
 import {Images} from '../../common/constants/Imges';
+import CustomHeader from '../../common/components/customHeader/customHeader.component';
 
 const Home = () => {
   const stylesObj = styles();
@@ -45,6 +46,7 @@ const Home = () => {
   };
   return (
     <SafeAreaView style={stylesObj.container}>
+      <CustomHeader titlle="Quran Digital" />
       <FlatList
         data={listOfSurah}
         keyExtractor={s => `${s.surah_id}`}
