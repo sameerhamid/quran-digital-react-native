@@ -6,7 +6,7 @@ const Colors = {
   grey1: '#F0F4F6',
   grey2: '#868AA3',
   grey3: '#000001',
-  line: '#F6F8FA',
+  line: '#e4e9ee',
   greyDark: '#2e2f35',
 };
 

@@ -37,6 +37,8 @@ const styles = (
       flexDirection: 'row',
       paddingHorizontal: 16,
       paddingVertical: 14,
+      borderBottomRightRadius: 12,
+      borderBottomLeftRadius: 12,
     },
     leftContainer: {
       justifyContent: 'center',
