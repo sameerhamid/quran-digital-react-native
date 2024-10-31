@@ -1,4 +1,4 @@
-import {ImageStyle, StyleSheet, TextStyle, ViewStyle} from 'react-native';
+import {StyleSheet, ViewStyle} from 'react-native';
 import Colors from '../../common/constants/Color.constants';
 
 type Styles = {
