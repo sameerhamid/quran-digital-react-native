@@ -7,6 +7,7 @@ import Home from '../../screens/Home/home.screen';
 import Detail from '../../screens/Details/detail.screen';
 import {NavScreenTags} from '../constants/navScreenTags';
 import Splash from '../../screens/Splash/splash.screen';
+import BottomTabs from './BottomTabsNavigation';
 
 export type RootStackParamList = {
   [NavScreenTags.SPLASH_SCREEN]: undefined;
@@ -14,14 +15,14 @@ export type RootStackParamList = {
   [NavScreenTags.DETAIL_SCREEN]: {surahNumber: number; totalVerses: number};
 };
 
-const Stack = createNativeStackNavigator<RootStackParamList>();
+const Stack = createNativeStackNavigator();
+
 const AppNavigation = () => {
   const RootStack = () => {
     return (
       <Stack.Navigator screenOptions={{headerShown: false}}>
         <Stack.Screen name={NavScreenTags.SPLASH_SCREEN} component={Splash} />
-        <Stack.Screen name={NavScreenTags.HOME_SCREEN} component={Home} />
-        <Stack.Screen name={NavScreenTags.DETAIL_SCREEN} component={Detail} />
+        <Stack.Screen name={NavScreenTags.BOTTOM_TABS} component={BottomTabs} />
       </Stack.Navigator>
     );
   };

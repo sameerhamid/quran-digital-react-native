@@ -65,7 +65,7 @@ const Splash = () => {
   }, []);
 
   const handleAnimationFinish = () => {
-    replace(NavScreenTags.HOME_SCREEN);
+    replace(NavScreenTags.BOTTOM_TABS);
   };
 
   return (

@@ -7,5 +7,7 @@ export const Images = {
     BOOKMARK: require('../assets/icons/bookmark.png'),
     SHARE: require('../assets/icons/share.png'),
     PAUSE: require('../assets/icons/pause.png'),
+    Home: require('../assets/icons/home.png'),
+    Qibla: require('../assets/icons/qibla-compass.png'),
   },
 };
