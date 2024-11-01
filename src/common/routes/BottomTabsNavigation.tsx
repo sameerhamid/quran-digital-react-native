@@ -6,7 +6,7 @@ import Home from '../../screens/Home/home.screen';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import Detail from '../../screens/Details/detail.screen';
 import {RootStackParamList} from './appNavigation';
-import Qubla from '../../screens/Qubla/qibla.screen';
+import PrayerTimings from '../../screens/PrayerTimings/prayerTimings.screen';
 import {Images} from '../constants/Imges';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {BottomTabNamesEnums} from '../constants/Enums';
@@ -57,10 +57,10 @@ const BottomTabs = () => {
         }}
       />
       <Tab.Screen
-        name={NavScreenTags.QIBLA}
-        component={Qubla}
+        name={NavScreenTags.PRYER_TIMINGS}
+        component={PrayerTimings}
         options={{
-          tabBarLabel: `${BottomTabNamesEnums.QIBLA_FINDER}`,
+          tabBarLabel: `${BottomTabNamesEnums.PRAYER_TIMINGS}`,
           tabBarIcon: ({color}) => (
             <Image
               source={Images.Icons.Qibla}

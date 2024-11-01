@@ -9,4 +9,5 @@ export const NavScreenTags = {
   //-------
 
   QIBLA: 'Qubla',
+  PRYER_TIMINGS: 'PrayerTimings',
 } as const;
