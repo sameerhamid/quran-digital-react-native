@@ -1,8 +1,9 @@
 import QuranKemenag from 'quran-kemenag';
-import {Surah, Verse} from 'quran-kemenag/dist/intefaces';
+
 import {useEffect, useState} from 'react';
 import SoundPlayer from 'react-native-sound-player';
 import {Quran, TranslationEnum} from 'islam.js';
+import {Surah, Verse} from 'quran-kemenag/dist/intefaces';
 
 export interface VerseType {
   id: number;
@@ -10,6 +11,7 @@ export interface VerseType {
   translation: string;
   urduTranslation: string;
 }
+
 interface DetailViewControllerTypes {
   surah: Surah | undefined;
   verses: Verse[] | [];
@@ -17,11 +19,12 @@ interface DetailViewControllerTypes {
   playingIndex: number | undefined;
   isLoadingAudio: boolean;
   newVerses: VerseType[] | [];
+  isLoading: boolean; // Add loading state for fetching data
 }
 
 const useDetailsViewController = (
   surahNumber: number,
-  totolVerses: number,
+  totalVerses: number,
 ): DetailViewControllerTypes => {
   // ----------- states----------
   const [surah, setSurah] = useState<Surah>();
@@ -30,6 +33,7 @@ const useDetailsViewController = (
   const [playingIndex, setPlayingIndex] = useState<number | undefined>();
   const [isLoadingAudio, setIsLoadingAudio] = useState<boolean>(false);
   const [playingVerse, setPlayingVerse] = useState<string | undefined>();
+  const [isLoading, setIsLoading] = useState<boolean>(true); // Initialize loading state
 
   // ----------  actions -------------
 
@@ -59,7 +63,6 @@ const useDetailsViewController = (
       setIsLoadingAudio(false);
 
       // set isPlaying state false after audio is completed
-
       setTimeout(() => {
         setPlayingIndex(undefined);
       }, duration * 1000);
@@ -100,7 +103,7 @@ const useDetailsViewController = (
     const quran = new Quran();
 
     const verseNumbers = Array.from(
-      {length: totolVerses},
+      {length: totalVerses},
       (_, index) => index + 1,
     );
 
@@ -127,7 +130,9 @@ const useDetailsViewController = (
     );
 
     setNewVerses(versesWithTranslation);
+    setIsLoading(false); // Set loading to false after fetching is done
   };
+
   useEffect(() => {
     getSurah();
     getChapterByIndex();
@@ -146,6 +151,7 @@ const useDetailsViewController = (
     playingIndex,
     isLoadingAudio,
     newVerses,
+    isLoading, // Return loading state
   };
 };
 

@@ -8,6 +8,8 @@ const Colors = {
   grey3: '#000001',
   line: '#e4e9ee',
   greyDark: '#2e2f35',
+  green: '#0c8b49cc',
+  danger: '#9e0d0d',
 };
 
 export default Colors;

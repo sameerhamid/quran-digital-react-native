@@ -19,6 +19,7 @@ import {goBack} from '../../common/utils/navigatorUtils';
 import {ScaledText} from 'urip-rn-kit';
 import {Verse} from 'quran-kemenag/dist/intefaces';
 import Colors from '../../common/constants/Color.constants';
+import CustomActivityIndicator from '../../common/components/customActivityIndicator';
 
 type DetailScreenProps = NativeStackScreenProps<
   RootStackParamList,
@@ -34,8 +35,13 @@ const Detail: React.FC<DetailScreenProps> = ({route}) => {
     playingIndex,
     isLoadingAudio,
     newVerses,
+    isLoading,
   } = useDetailsViewController(surahNumber, totalVerses);
   const stylesObj = styles();
+
+  if (isLoading) {
+    return <CustomActivityIndicator />;
+  }
 
   const renderCard = (): React.JSX.Element => {
     return (

@@ -2,7 +2,24 @@ import {useEffect, useState} from 'react';
 import Geolocation from 'react-native-geolocation-service';
 import {CalculationMethod, Coordinates, PrayerTimes} from 'adhan';
 import PermissionUtils from '../../common/utils/permissionUtils';
+//@ts-ignore
+import HijriDate from 'hijri-date/lib/safe';
 
+// Mapping of Hijri month numbers to Arabic names
+const hijriMonthNames = [
+  'محرّم', // 1
+  'صفر', // 2
+  'ربيع الأوّل', // 3
+  'ربيع الآخر', // 4
+  'جمادى الأولى', // 5
+  'جمادى الآخرة', // 6
+  'رجب', // 7
+  'شعبان', // 8
+  'رمضان', // 9
+  'شوّال', // 10
+  'ذو القعدة', // 11
+  'ذو الحجة', // 12
+];
 interface PrayerTime {
   name: string;
   startTime: string;
@@ -17,16 +34,36 @@ const formatTime = (date: Date): string => {
   });
 };
 
+// Format the current date to "Friday 01-11-24"
+const formatCurrentDay = (date: Date): string => {
+  const options: Intl.DateTimeFormatOptions = {weekday: 'long'};
+  const dayName = date.toLocaleDateString('en-US', options);
+  const formattedDate = date.toLocaleDateString('en-US', {
+    day: '2-digit',
+    month: '2-digit',
+    year: '2-digit',
+  });
+  return `${dayName} ${formattedDate}`;
+};
+
 interface PrayerTimingsControllerTypes {
   prayerTimes: PrayerTime[];
   error: string | null;
   loading: boolean;
+  islamicDate: string | null;
+  city: string | null;
+  currentDay: string;
 }
 
 const usePrayerTimingsController = (): PrayerTimingsControllerTypes => {
   const [prayerTimes, setPrayerTimes] = useState<PrayerTime[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
+  const [islamicDate, setIslamicDate] = useState<string | null>(null);
+  const [city, setCity] = useState<string | null>(null);
+  const [currentDay, setCurrentDay] = useState<string>(
+    formatCurrentDay(new Date()), // Use the formatting function here
+  );
 
   useEffect(() => {
     const fetchPrayerTimes = async () => {
@@ -41,10 +78,16 @@ const usePrayerTimingsController = (): PrayerTimingsControllerTypes => {
         }
 
         Geolocation.getCurrentPosition(
-          position => {
+          async position => {
             const {latitude, longitude} = position.coords;
             const date = new Date();
             const coordinates = new Coordinates(latitude, longitude);
+
+            // Set the Islamic (Hijri) date
+            const hijriDate = new HijriDate();
+            const monthName = hijriMonthNames[hijriDate.getMonth()]; // Get the Arabic month name
+            const formattedIslamicDate = `${hijriDate.getDate()} ${monthName} ${hijriDate.getFullYear()}`;
+            setIslamicDate(formattedIslamicDate);
 
             const params = CalculationMethod.UmmAlQura();
             params.adjustments = {
@@ -105,7 +148,7 @@ const usePrayerTimingsController = (): PrayerTimingsControllerTypes => {
     fetchPrayerTimes();
   }, []);
 
-  return {prayerTimes, error, loading};
+  return {prayerTimes, error, loading, islamicDate, city, currentDay};
 };
 
 export default usePrayerTimingsController;

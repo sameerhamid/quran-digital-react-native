@@ -10,5 +10,6 @@ export const Images = {
     Home: require('../assets/icons/home.png'),
     Qibla: require('../assets/icons/qibla-compass.png'),
     ARROW_UP: require('../assets/icons/arrow-up.png'),
+    TIME: require('../assets/icons/time.png'),
   },
 };

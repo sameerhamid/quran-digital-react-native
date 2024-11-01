@@ -63,8 +63,8 @@ const BottomTabs = () => {
           tabBarLabel: `${BottomTabNamesEnums.PRAYER_TIMINGS}`,
           tabBarIcon: ({color}) => (
             <Image
-              source={Images.Icons.Qibla}
-              style={{tintColor: color, ...styles.icons}}
+              source={Images.Icons.TIME}
+              style={{tintColor: color, ...styles.icons, width: 38, height: 38}}
             />
           ),
         }}
