@@ -79,7 +79,7 @@ const styles = (): DetailsStylesTypes =>
       tintColor: Colors.purple1,
     },
     verse: {
-      rowGap: 16,
+      rowGap: 10,
       marginTop: 6,
       paddingHorizontal: 10,
       backgroundColor: Colors.grey1,

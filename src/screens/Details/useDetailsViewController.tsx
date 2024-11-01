@@ -2,20 +2,31 @@ import QuranKemenag from 'quran-kemenag';
 import {Surah, Verse} from 'quran-kemenag/dist/intefaces';
 import {useEffect, useState} from 'react';
 import SoundPlayer from 'react-native-sound-player';
+import {Quran, TranslationEnum} from 'islam.js';
+
+export interface VerseType {
+  id: number;
+  verse: string;
+  translation: string;
+  urduTranslation: string;
+}
 interface DetailViewControllerTypes {
   surah: Surah | undefined;
   verses: Verse[] | [];
   togglePlayPause: (index: number) => void;
   playingIndex: number | undefined;
   isLoadingAudio: boolean;
+  newVerses: VerseType[] | [];
 }
 
 const useDetailsViewController = (
   surahNumber: number,
+  totolVerses: number,
 ): DetailViewControllerTypes => {
   // ----------- states----------
   const [surah, setSurah] = useState<Surah>();
   const [verses, setVerses] = useState<Verse[]>([]);
+  const [newVerses, setNewVerses] = useState<VerseType[]>([]);
   const [playingIndex, setPlayingIndex] = useState<number | undefined>();
   const [isLoadingAudio, setIsLoadingAudio] = useState<boolean>(false);
   const [playingVerse, setPlayingVerse] = useState<string | undefined>();
@@ -68,9 +79,11 @@ const useDetailsViewController = (
   };
 
   const togglePlayPause = async (index: number) => {
-    if (playingIndex || playingVerse) {
+    if (playingIndex === index && playingVerse) {
+      // If the same index is clicked while audio is playing, pause it
       await pauseSound();
     } else {
+      // Otherwise, play the new sound
       await playSound(index);
     }
   };
@@ -83,8 +96,41 @@ const useDetailsViewController = (
     setVerses(data.verses || []);
   };
 
+  const getChapterByIndex = async (): Promise<void> => {
+    const quran = new Quran();
+
+    const verseNumbers = Array.from(
+      {length: totolVerses},
+      (_, index) => index + 1,
+    );
+
+    const versesWithTranslation = await Promise.all(
+      verseNumbers.map(async verseNo => {
+        // Fetch the verse data with translation
+        const verseData = await quran.getMultipleVersesWithTranslation([
+          {chapterNo: surahNumber, verseNo: verseNo},
+        ]);
+
+        // Fetch the Urdu translation
+        const urduTranslation = await quran.getMultipleVersesWithTranslation(
+          [{chapterNo: surahNumber, verseNo: verseNo}],
+          TranslationEnum.Urdu,
+        );
+
+        // Return the combined object with both translations
+        return {
+          id: verseNo,
+          ...verseData[0], // Original verse data
+          urduTranslation: urduTranslation[0]?.translation || '', // Assuming the Urdu translation is stored in `text`
+        };
+      }),
+    );
+
+    setNewVerses(versesWithTranslation);
+  };
   useEffect(() => {
     getSurah();
+    getChapterByIndex();
 
     return () => {
       pauseSound(); // Pause audio when component unmounts
@@ -99,6 +145,7 @@ const useDetailsViewController = (
     togglePlayPause,
     playingIndex,
     isLoadingAudio,
+    newVerses,
   };
 };
 

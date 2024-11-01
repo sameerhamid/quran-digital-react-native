@@ -9,7 +9,7 @@ import {NavScreenTags} from '../constants/navScreenTags';
 
 export type RootStackParamList = {
   [NavScreenTags.HOME_SCREEN]: undefined;
-  [NavScreenTags.DETAIL_SCREEN]: {surahNumber: number}; // Detail screen expects id and name
+  [NavScreenTags.DETAIL_SCREEN]: {surahNumber: number; totalVerses: number}; // Detail screen expects id and name
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();

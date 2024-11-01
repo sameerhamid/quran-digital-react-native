@@ -10,7 +10,7 @@ import {
 import React from 'react';
 import {RootStackParamList} from '../../common/routes/appNavigation';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import useDetailsViewController from './useDetailsViewController';
+import useDetailsViewController, {VerseType} from './useDetailsViewController';
 import {NavScreenTags} from '../../common/constants/navScreenTags';
 import styles from './styles';
 import CustomHeader from '../../common/components/customHeader/customHeader.component';
@@ -26,9 +26,15 @@ type DetailScreenProps = NativeStackScreenProps<
 >;
 
 const Detail: React.FC<DetailScreenProps> = ({route}) => {
-  const {surahNumber} = route.params;
-  const {surah, verses, togglePlayPause, playingIndex, isLoadingAudio} =
-    useDetailsViewController(surahNumber);
+  const {surahNumber, totalVerses} = route.params;
+  const {
+    surah,
+    verses,
+    togglePlayPause,
+    playingIndex,
+    isLoadingAudio,
+    newVerses,
+  } = useDetailsViewController(surahNumber, totalVerses);
   const stylesObj = styles();
 
   const renderCard = (): React.JSX.Element => {
@@ -47,7 +53,7 @@ const Detail: React.FC<DetailScreenProps> = ({route}) => {
     );
   };
 
-  const renderVerseItem = (verse: Verse, index: number) => {
+  const renderVerseItem = (verse: VerseType, index: number) => {
     return (
       <View style={stylesObj.verseContainer}>
         <View style={stylesObj.verseHead}>
@@ -83,10 +89,13 @@ const Detail: React.FC<DetailScreenProps> = ({route}) => {
         </View>
         <View style={stylesObj.verse}>
           <ScaledText color={Colors.greyDark} bold size={24}>
-            {verse.verse_arabic}
+            {verse.verse}
           </ScaledText>
           <ScaledText color={Colors.greyDark} size={18}>
-            {verse.verse_bahasa}
+            {verse.translation}
+          </ScaledText>
+          <ScaledText color={Colors.greyDark} size={18}>
+            {verse.urduTranslation}
           </ScaledText>
         </View>
       </View>
@@ -105,10 +114,10 @@ const Detail: React.FC<DetailScreenProps> = ({route}) => {
         {renderCard()}
 
         <FlatList
-          // contentContainerStyle={{marginTop: 20}}
-          keyExtractor={v => `${v.verse_id}`}
-          data={verses}
-          renderItem={({item, index}: {item: Verse; index: number}) =>
+          contentContainerStyle={{paddingBottom: 200}}
+          keyExtractor={verse => `${verse.id}`}
+          data={newVerses}
+          renderItem={({item, index}: {item: VerseType; index: number}) =>
             renderVerseItem(item, index)
           }
         />

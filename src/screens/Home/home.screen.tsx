@@ -6,16 +6,20 @@ import styles from './styles';
 import Colors from '../../common/constants/Color.constants';
 import {Images} from '../../common/constants/Imges';
 import CustomHeader from '../../common/components/customHeader/customHeader.component';
+import {Chapter} from 'islam.js';
 
 const Home = () => {
   const stylesObj = styles();
-  const {listOfSurah, onSurahItemPress} = useHomeScreenViewController();
+  const {listOfSurah, onSurahItemPress, chapters} =
+    useHomeScreenViewController();
 
-  const renderSurahItem = (surah: Surah) => {
+  const renderSurahItem = (chapter: Surah) => {
     return (
       <TouchableOpacity
         style={stylesObj.row}
-        onPress={() => onSurahItemPress(surah.surah_id)}>
+        onPress={() =>
+          onSurahItemPress(chapter.surah_id, chapter.surah_verse_count)
+        }>
         <View style={stylesObj.left}>
           <Box
             backgroundImage={Images.NUM_BACKGROUND}
@@ -24,21 +28,21 @@ const Home = () => {
             width={34}
             height={34}>
             <ScaledText color={Colors.grey2} size={10} bold>
-              {surah.surah_id}
+              {chapter.surah_id}
             </ScaledText>
           </Box>
           <View>
             <ScaledText size={18} bold color={Colors.greyDark}>
-              {surah.surah_name}
+              {chapter.surah_name}
             </ScaledText>
             <ScaledText
               color={Colors.grey2}
-              size={14}>{`${surah.surah_verse_count} verses`}</ScaledText>
+              size={14}>{`${chapter.surah_verse_count} verses`}</ScaledText>
           </View>
         </View>
         <View>
           <ScaledText color={Colors.purple1} size={18} bold>
-            {surah.surah_name_arabic}
+            {chapter.surah_name_arabic}
           </ScaledText>
         </View>
       </TouchableOpacity>
