@@ -6,7 +6,7 @@ import Home from '../../screens/Home/home.screen';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import Detail from '../../screens/Details/detail.screen';
 import {RootStackParamList} from './appNavigation';
-import Qubla from '../../screens/Qubla/qubla.screen';
+import Qubla from '../../screens/Qubla/qibla.screen';
 import {Images} from '../constants/Imges';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {BottomTabNamesEnums} from '../constants/Enums';

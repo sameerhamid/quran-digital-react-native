@@ -9,5 +9,6 @@ export const Images = {
     PAUSE: require('../assets/icons/pause.png'),
     Home: require('../assets/icons/home.png'),
     Qibla: require('../assets/icons/qibla-compass.png'),
+    ARROW_UP: require('../assets/icons/arrow-up.png'),
   },
 };
